@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/static/dashboard.css">
+
+    <link rel="stylesheet" href="/static/pemesanan.css">
+
+    <title>Pemesanan</title>
+</head>
+<body>
+
+<div class="header">
+    <h1>Arta Tirta — Air Minum Isi Ulang</h1>
+    <p>Manajemen Operasional Depot Air Minum</p>
+</div>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan" class="active">Pemesanan</a></li>
+        <li><a href="/harga">Daftar Harga</a></li>
+        <li><a href="#">Stok</a></li>
+        <li><a href="#">Lokasi</a></li>
+        <li><a href="#">Informasi</a></li>
+    </ul>
+    <a href="/logout" class="logout">Logout</a>
+</nav>
+
+<div class="container">
+    <h2>Daftar Pemesanan</h2>
+
+    <div class="order-list">
+
+        {% for p in pemesanan %}
+        <div class="order-card">
+            <h3>{{ p.nama }}</h3>
+
+            <div class="order-info">
+                <p><strong>Alamat:</strong> {{ p.alamat }}</p>
+                <p><strong>Jumlah Galon:</strong> {{ p.jumlah }}</p>
+
+                <!-- Badge Status -->
+                {% if p.status == "Selesai" %}
+                    <span class="badge selesai">Selesai</span>
+                {% elif p.status == "Proses" %}
+                    <span class="badge proses">Proses</span>
+                {% elif p.status == "Dikirim" %}
+                    <span class="badge dikirim">Dikirim</span>
+                {% else %}
+                    <span class="badge">{{ p.status }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+</body>
+</html>

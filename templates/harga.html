@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="/static/dashboard.css">
+
+    <link rel="stylesheet" href="/static/harga.css">
+
+    <title>Daftar Harga</title>
+</head>
+<body>
+
+<div class="header">
+    <h1>Arta Tirta — Air Minum Isi Ulang</h1>
+    <p>Manajemen Operasional Depot Air Minum</p>
+</div>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/harga" class="active">Daftar Harga</a></li>
+        <li><a href="#">Stok</a></li>
+        <li><a href="#">Lokasi</a></li>
+        <li><a href="#">Informasi</a></li>
+    </ul>
+    <a href="/logout" class="logout">Logout</a>
+</nav>
+
+<div class="container">
+    <h2>Daftar Harga</h2>
+
+    <div class="price-grid">
+
+        {% for h in harga %}
+        <div class="price-card">
+            <h3>{{ h.jenis }}</h3>
+            <p class="price">Rp {{ h.harga }}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

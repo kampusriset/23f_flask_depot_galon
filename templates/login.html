@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+        
+        <div class="logo-box">
+            <img src="{{ url_for('static', filename='water.png') }}" alt="Logo" class="logo">
+            <h2>Arta Tirta</h2>
+            <p>Air Minum Isi Ulang Galon</p>
+        </div>
+
+        <div class="form-box">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Masukkan Username" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Masukkan Password" required>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
