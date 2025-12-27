@@ -2,100 +2,115 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Arta Tirta</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <title>Dashboard - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <header class="header">
-        <h1>Arta Tirta — Air Minum Isi Ulang</h1>
-        <p>Manajemen Operasional Depot Air Minum</p>
-    </header>
+<div class="header">
+    <h1>Arta Tirta — Air Minum Isi Ulang</h1>
+    <p>Manajemen Operasional Depot Air Minum</p>
+</div>
 
-    <nav class="navbar">
-        <ul>
+<nav class="navbar">
+    <ul>
         <li><a href="/dashboard" class="active">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
-        <li><a href="/harga">Daftar Harga</a></li>
-        <li><a href="#">Stok</a></li>
-        <li><a href="#">Lokasi</a></li>
-        <li><a href="#">Informasi</a></li>
+        <li><a href="/harga">Daftar Harga & Pesan</a></li>
     </ul>
-    <a href="/logout" class="logout">Logout</a>
-    </nav>
+    <div class="user-info">
+        <span style="color: #0077c8; font-weight: bold;">
+            {{ username }}
+        </span>
+        {% if session.get('role') == 'admin' %}
+        <span class="role-badge">Admin</span>
+        {% endif %}
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+</nav>
 
+<div class="container">
+    
+    <div class="welcome-box">
+        <h2>Selamat Datang, {{ username }}!</h2>
+        <p>Sistem Manajemen Depot Air Minum Isi Ulang</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
-    <section class="welcome">
-        <h2>Selamat Datang, <strong>{{ username }}</strong></h2>
-        <p>Kelola usaha depot air minum Anda dengan mudah dan cepat.</p>
-    </section>
-
-    <section class="cards-container">
-
+    <div class="cards">
         <div class="card">
-            <h3>Pemesanan Hari Ini</h3>
-            <p class="value">12 Pesanan</p>
+            <h3>Total Pesanan</h3>
+            <p style="font-size: 36px; color: #0077c8; font-weight: bold;">{{ total_pesanan }}</p>
+            <p>Total pesanan yang pernah dibuat</p>
         </div>
-
+        
         <div class="card">
-            <h3>Stok Galon Kosong</h3>
-            <p class="value">145 Galon</p>
+            <h3>Menunggu Konfirmasi</h3>
+            <p style="font-size: 36px; color: #ff9900; font-weight: bold;">{{ pesanan_menunggu }}</p>
+            <p>Pesanan yang sedang diproses</p>
         </div>
-
+        
         <div class="card">
-            <h3>Transaksi Bulan Ini</h3>
-            <p class="value">Rp 3.820.000</p>
+            <h3>Pesanan Selesai</h3>
+            <p style="font-size: 36px; color: #28a745; font-weight: bold;">{{ pesanan_selesai }}</p>
+            <p>Pesanan yang telah selesai</p>
         </div>
+    </div>
 
-        <div class="card">
-            <h3>Rating Pelanggan</h3>
-            <p class="value">4.8 ⭐</p>
-        </div>
-    </section>
+    {% if session.get('role') == 'admin' %}
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/admin/dashboard" class="btn" style="background: #6f42c1;">
+            Dashboard Admin
+        </a>
+    </div>
+    {% endif %}
 
-    <section class="info-table">
+    <div class="table-container" style="margin-top: 40px;">
+        <h3>Pesanan Terbaru</h3>
+        {% if pesanan_terbaru %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Tanggal</th>
+                    <th>Jenis Galon</th>
+                    <th>Jumlah</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pesanan_terbaru %}
+                <tr>
+                    <td>{{ p.kode_pemesanan }}</td>
+                    <td>{{ p.tanggal_pesan.strftime('%d-%m-%Y') }}</td>
+                    <td>{{ p.jenis_galon }}</td>
+                    <td>{{ p.jumlah }}</td>
+                    <td>Rp {{ "{:,.0f}".format(p.total_harga) }}</td>
+                    <td>
+                        <span class="status-badge status-{{ p.status|lower|replace(' ', '-') }}">
+                            {{ p.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 20px;">
+            Belum ada pesanan. <a href="/harga" class="link">Pesan sekarang!</a>
+        </p>
+        {% endif %}
+    </div>
 
-        <div class="table-box">
-            <h3>Daftar Harga</h3>
-            <table>
-                <tr><th>Jenis</th><th>Harga</th></tr>
-                <tr><td>Isi Ulang Biasa</td><td>Rp 6.000</td></tr>
-                <tr><td>Isi Ulang RO</td><td>Rp 8.000</td></tr>
-                <tr><td>Galon Baru</td><td>Rp 45.000</td></tr>
-            </table>
-        </div>
-
-        <div class="table-box">
-            <h3>Stok Terkini</h3>
-            <table>
-                <tr><th>Barang</th><th>Jumlah</th></tr>
-                <tr><td>Galon Kosong</td><td>145</td></tr>
-                <tr><td>Tutup Galon</td><td>430</td></tr>
-                <tr><td>Air Siap Isi</td><td>2.500 Liter</td></tr>
-            </table>
-        </div>
-
-    </section>
-
-    <section class="location">
-        <h3>Lokasi Depot</h3>
-        <p>Jl. Embarkasi H., Banaran, Gagaksipat, Kec. Ngemplak, Kabupaten Boyolali, Jawa Tengah 57375</p>
-    </section>
-
-    <section class="important-info">
-        <h3>Informasi Penting</h3>
-        <ul>
-            <li>Jam Operasional: 07.00 – 22.00 WIB</li>
-            <li>Layanan Antar Gratis minimal 3 galon</li>
-            <li>Customer service: 0852-XXXX-XXXX</li>
-        </ul>
-    </section>
-
-    <footer>
-        © 2025 Arta Tirta — Air Minum Isi Ulang
-    </footer>
+</div>
 
 </body>
 </html>

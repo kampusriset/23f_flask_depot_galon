@@ -2,12 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    
-    <link rel="stylesheet" href="/static/dashboard.css">
-
+    <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/harga.css">
-
-    <title>Daftar Harga</title>
+    <title>Daftar Harga & Pemesanan</title>
 </head>
 <body>
 
@@ -20,26 +17,101 @@
     <ul>
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
-        <li><a href="/harga" class="active">Daftar Harga</a></li>
-        <li><a href="#">Stok</a></li>
-        <li><a href="#">Lokasi</a></li>
-        <li><a href="#">Informasi</a></li>
+        <li><a href="/harga" class="active">Daftar Harga & Pesan</a></li>
     </ul>
-    <a href="/logout" class="logout">Logout</a>
+    <div class="user-info">
+        <span style="color: #0077c8; font-weight: bold;">
+            {{ session.get('nama_lengkap', 'User') }}
+        </span>
+        {% if session.get('role') == 'admin' %}
+        <span class="role-badge">Admin</span>
+        {% endif %}
+        <a href="/logout" class="logout">Logout</a>
+    </div>
 </nav>
 
 <div class="container">
-    <h2>Daftar Harga</h2>
+    <h2>Daftar Harga & Pemesanan Galon</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <div class="price-grid">
-
         {% for h in harga %}
         <div class="price-card">
             <h3>{{ h.jenis }}</h3>
-            <p class="price">Rp {{ h.harga }}</p>
+            <p class="price">Rp {{ "{:,.0f}".format(h.harga) }}</p>
+            
+            {% if h.stok > 0 %}
+            <div class="stok-info stok-tinggi">Stok: {{ h.stok }} galon</div>
+            {% else %}
+            <div class="stok-info stok-rendah">Stok Habis</div>
+            {% endif %}
+            
+            <form method="POST" action="{{ url_for('pesan_galon') }}" class="order-form">
+                <input type="hidden" name="jenis_galon" value="{{ h.jenis }}">
+                <input type="hidden" name="harga" value="{{ h.harga }}">
+                
+                <div class="form-group">
+                    <label for="nama{{ loop.index }}">Nama Pelanggan:</label>
+                    <input type="text" id="nama{{ loop.index }}" name="nama" required 
+                           placeholder="Nama pelanggan" value="{{ session.get('nama_lengkap', '') }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat{{ loop.index }}">Alamat Pengiriman:</label>
+                    <textarea id="alamat{{ loop.index }}" name="alamat" rows="2" required 
+                              placeholder="Alamat lengkap pengiriman"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jumlah{{ loop.index }}">Jumlah Galon:</label>
+                    <input type="number" id="jumlah{{ loop.index }}" name="jumlah" 
+                           min="1" max="50" value="1" required 
+                           {% if h.stok > 0 %}max="{{ h.stok }}"{% else %}disabled{% endif %}>
+                </div>
+                
+                <div class="form-group">
+                    <label for="metode{{ loop.index }}">Metode Pembayaran:</label>
+                    <select id="metode{{ loop.index }}" name="metode_pembayaran">
+                        <option value="Cash">Cash (Bayar di Tempat)</option>
+                        <option value="Transfer">Transfer Bank</option>
+                        <option value="QRIS">QRIS</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="catatan{{ loop.index }}">Catatan (opsional):</label>
+                    <textarea id="catatan{{ loop.index }}" name="catatan" rows="2" 
+                              placeholder="Catatan khusus"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-order" {% if h.stok <= 0 %}disabled{% endif %}>
+                    {% if h.stok > 0 %}Pesan Sekarang{% else %}Stok Habis{% endif %}
+                </button>
+            </form>
+            
+            {% if is_admin %}
+            <div class="admin-section">
+                <h4>Tambah Stok (Admin)</h4>
+                <form method="POST" action="{{ url_for('beli_galon') }}">
+                    <input type="hidden" name="jenis_galon" value="{{ h.jenis }}">
+                    <div class="form-group">
+                        <label for="tambah{{ loop.index }}">Jumlah Tambah Stok:</label>
+                        <input type="number" id="tambah{{ loop.index }}" name="jumlah" 
+                               min="1" max="1000" value="10" required>
+                    </div>
+                    <button type="submit" class="btn-beli">Tambah Stok</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
-
     </div>
 
 </div>

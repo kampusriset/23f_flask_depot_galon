@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kelola Stok - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Arta Tirta — Kelola Stok Galon</h1>
+    <p>Sistem Manajemen Depot Air Minum Isi Ulang</p>
+</div>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/harga">Daftar Harga</a></li>
+        <li><a href="/stok" class="active">Stok</a></li>
+    </ul>
+    <div class="user-info">
+        <span style="color: #0077c8; font-weight: bold;">
+            {{ session.get('nama_lengkap', 'Admin') }}
+        </span>
+        <span class="role-badge">Admin</span>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Kelola Stok Galon</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="cards">
+        {% for galon in galon_list %}
+        <div class="card">
+            <h3>{{ galon.jenis }}</h3>
+            <p style="font-size: 24px; color: #0077c8; font-weight: bold;">
+                Rp {{ "{:,.0f}".format(galon.harga) }}
+            </p>
+            <p>
+                {% if galon.stok > 50 %}
+                <span style="font-size: 18px; font-weight: bold; color: #28a745;">
+                    Stok: {{ galon.stok }} galon (Tinggi)
+                </span>
+                {% elif galon.stok > 10 %}
+                <span style="font-size: 18px; font-weight: bold; color: #ffc107;">
+                    Stok: {{ galon.stok }} galon (Sedang)
+                </span>
+                {% else %}
+                <span style="font-size: 18px; font-weight: bold; color: #e63946;">
+                    Stok: {{ galon.stok }} galon (Rendah)
+                </span>
+                {% endif %}
+            </p>
+            <p>
+                Status: 
+                {% if galon.is_available %}
+                <span style="color: #28a745; font-weight: bold;">● Tersedia</span>
+                {% else %}
+                <span style="color: #e63946; font-weight: bold;">● Habis</span>
+                {% endif %}
+            </p>
+            <a href="/harga" class="btn">Tambah Stok</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="table-container" style="margin-top: 40px;">
+        <h3>Riwayat Pembelian Galon</h3>
+        {% if pembelian_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Pembeli</th>
+                    <th>Jenis Galon</th>
+                    <th>Jumlah</th>
+                    <th>Harga Satuan</th>
+                    <th>Total Harga</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pembelian_list %}
+                <tr>
+                    <td>{{ p.tanggal_beli.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>{{ p.pembeli.username }}</td>
+                    <td>{{ p.jenis_galon }}</td>
+                    <td>{{ p.jumlah }} galon</td>
+                    <td>Rp {{ "{:,.0f}".format(p.harga_satuan) }}</td>
+                    <td>Rp {{ "{:,.0f}".format(p.total_harga) }}</td>
+                    <td>
+                        <span class="status-badge status-{{ p.status }}">
+                            {{ p.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 20px;">
+            Belum ada riwayat pembelian galon.
+        </p>
+        {% endif %}
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/harga" class="btn" style="background: #28a745;">Tambah Stok dari Halaman Harga</a>
+        <a href="/admin/dashboard" class="btn">Kembali ke Dashboard Admin</a>
+    </div>
+
+</div>
+
+</body>
+</html>

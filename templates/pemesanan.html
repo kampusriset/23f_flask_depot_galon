@@ -2,12 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-
-    <link rel="stylesheet" href="/static/dashboard.css">
-
-    <link rel="stylesheet" href="/static/pemesanan.css">
-
-    <title>Pemesanan</title>
+    <title>Pemesanan - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -20,42 +16,93 @@
     <ul>
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/pemesanan" class="active">Pemesanan</a></li>
-        <li><a href="/harga">Daftar Harga</a></li>
-        <li><a href="#">Stok</a></li>
-        <li><a href="#">Lokasi</a></li>
-        <li><a href="#">Informasi</a></li>
+        <li><a href="/harga">Daftar Harga & Pesan</a></li>
     </ul>
-    <a href="/logout" class="logout">Logout</a>
+    <div class="user-info">
+        <span style="color: #0077c8; font-weight: bold;">
+            {{ session.get('nama_lengkap', 'User') }}
+        </span>
+        {% if session.get('role') == 'admin' %}
+        <span class="role-badge">Admin</span>
+        {% endif %}
+        <a href="/logout" class="logout">Logout</a>
+    </div>
 </nav>
 
 <div class="container">
-    <h2>Daftar Pemesanan</h2>
+    <h2>Data Pemesanan</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-    <div class="order-list">
-
-        {% for p in pemesanan %}
-        <div class="order-card">
-            <h3>{{ p.nama }}</h3>
-
-            <div class="order-info">
-                <p><strong>Alamat:</strong> {{ p.alamat }}</p>
-                <p><strong>Jumlah Galon:</strong> {{ p.jumlah }}</p>
-
-                <!-- Badge Status -->
-                {% if p.status == "Selesai" %}
-                    <span class="badge selesai">Selesai</span>
-                {% elif p.status == "Proses" %}
-                    <span class="badge proses">Proses</span>
-                {% elif p.status == "Dikirim" %}
-                    <span class="badge dikirim">Dikirim</span>
-                {% else %}
-                    <span class="badge">{{ p.status }}</span>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-
+    <div class="table-container">
+        {% if pemesanan %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Kode Pesanan</th>
+                    <th>Tanggal</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Jenis Galon</th>
+                    <th>Jumlah</th>
+                    <th>Total Harga</th>
+                    <th>Status</th>
+                    {% if session.get('role') == 'admin' %}
+                    <th>Update Status</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pemesanan %}
+                <tr>
+                    <td>{{ p.kode_pemesanan }}</td>
+                    <td>{{ p.tanggal_pesan.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>{{ p.nama_pelanggan }}</td>
+                    <td>{{ p.jenis_galon }}</td>
+                    <td>{{ p.jumlah }} galon</td>
+                    <td>Rp {{ "{:,.0f}".format(p.total_harga) }}</td>
+                    <td>
+                        <span class="status-badge status-{{ p.status|lower|replace(' ', '-') }}">
+                            {{ p.status }}
+                        </span>
+                    </td>
+                    {% if session.get('role') == 'admin' %}
+                    <td>
+                        <form method="POST" action="{{ url_for('update_status', pesanan_id=p.id) }}" style="display: inline;">
+                            <select name="status" onchange="this.form.submit()">
+                                <option value="Menunggu Konfirmasi" {% if p.status == 'Menunggu Konfirmasi' %}selected{% endif %}>Menunggu</option>
+                                <option value="Dikonfirmasi" {% if p.status == 'Dikonfirmasi' %}selected{% endif %}>Dikonfirmasi</option>
+                                <option value="Diproses" {% if p.status == 'Diproses' %}selected{% endif %}>Diproses</option>
+                                <option value="Dikirim" {% if p.status == 'Dikirim' %}selected{% endif %}>Dikirim</option>
+                                <option value="Selesai" {% if p.status == 'Selesai' %}selected{% endif %}>Selesai</option>
+                            </select>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 20px;">
+            Belum ada pesanan. <a href="/harga" class="link">Pesan sekarang!</a>
+        </p>
+        {% endif %}
     </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/harga" class="btn">Buat Pesanan Baru</a>
+        {% if session.get('role') == 'admin' %}
+        <a href="/stok" class="btn" style="background: #6f42c1;">Kelola Stok</a>
+        <a href="/admin/dashboard" class="btn" style="background: #28a745;">Dashboard Admin</a>
+        {% endif %}
+    </div>
+
 </div>
 
 </body>

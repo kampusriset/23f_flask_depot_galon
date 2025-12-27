@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Arta Tirta — Admin Dashboard</h1>
+    <p>Sistem Manajemen Depot Air Minum Isi Ulang</p>
+</div>
+
+<nav class="navbar">
+    <ul>
+        <li><a href="/dashboard">Dashboard User</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="#">Laporan</a></li>
+        <li><a href="#">Pengguna</a></li>
+    </ul>
+    <div class="user-info">
+        <span style="color: #0077c8; font-weight: bold;">
+            {{ session.get('nama_lengkap', 'Admin') }}
+        </span>
+        <span class="role-badge">Admin</span>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>Dashboard Administrator</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total Pengguna</h3>
+            <p style="font-size: 36px; color: #0077c8; font-weight: bold;">{{ total_users }}</p>
+            <p>Jumlah pengguna terdaftar</p>
+        </div>
+        
+        <div class="card">
+            <h3>Total Pesanan</h3>
+            <p style="font-size: 36px; color: #28a745; font-weight: bold;">{{ total_pesanan }}</p>
+            <p>Total semua pesanan</p>
+        </div>
+        
+        <div class="card">
+            <h3>Total Pendapatan</h3>
+            <p style="font-size: 36px; color: #6f42c1; font-weight: bold;">
+                Rp {{ "{:,.0f}".format(total_pendapatan) }}
+            </p>
+            <p>Total pendapatan semua pesanan</p>
+        </div>
+        
+        <div class="card">
+            <h3>Pesanan Hari Ini</h3>
+            <p style="font-size: 36px; color: #ff9900; font-weight: bold;">{{ pesanan_hari_ini }}</p>
+            <p>Pesanan pada {{ today }}</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/stok" class="btn" style="background: #28a745;">Kelola Stok Galon</a>
+        <a href="/pemesanan" class="btn">Kelola Pesanan</a>
+        <a href="/dashboard" class="btn" style="background: #6f42c1;">Dashboard User</a>
+    </div>
+
+</div>
+
+</body>
+</html>

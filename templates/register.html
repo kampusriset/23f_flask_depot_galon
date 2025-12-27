@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Arta Tirta</title>
+    <title>Register - Arta Tirta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -13,6 +13,7 @@
             <img src="{{ url_for('static', filename='water.png') }}" alt="Logo" class="logo">
             <h2>Arta Tirta</h2>
             <p>Air Minum Isi Ulang Galon</p>
+            <p style="color: #666; font-size: 13px; margin-top: 5px;">Registrasi Akun Baru</p>
         </div>
 
         <div class="form-box">
@@ -26,28 +27,31 @@
             {% endif %}
             {% endwith %}
 
-            <form method="POST">
-                <label>Username</label>
+            <form method="POST" action="{{ url_for('register') }}">
+                <label>Username *</label>
                 <input type="text" name="username" placeholder="Masukkan username" required>
-
-                <label>Password</label>
+                
+                <label>Password *</label>
                 <input type="password" name="password" placeholder="Masukkan password" required>
-
-                <button type="submit" class="btn-login">Login</button>
+                
+                <label>Nama Lengkap</label>
+                <input type="text" name="nama_lengkap" placeholder="Nama lengkap Anda">
+                
+                <label>Email</label>
+                <input type="email" name="email" placeholder="email@contoh.com">
+                
+                <label>Nomor Telepon</label>
+                <input type="tel" name="telepon" placeholder="08xxxxxxxxxx">
+                
+                <button type="submit" class="btn-login">Daftar Akun</button>
             </form>
             
             <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
                 <p style="color: #666; font-size: 14px;">
-                    Belum punya akun? 
-                    <a href="{{ url_for('register') }}" style="color: #0077c8; text-decoration: none; font-weight: bold;">
-                        Daftar di sini
+                    Sudah punya akun? 
+                    <a href="{{ url_for('login') }}" style="color: #0077c8; text-decoration: none; font-weight: bold;">
+                        Login di sini
                     </a>
-                </p>
-                
-                <p style="color: #666; font-size: 12px; margin-top: 15px;">
-                    <strong>Login Demo:</strong><br>
-                    Admin: admin / 12345<br>
-                    Customer: budi / 12345
                 </p>
             </div>
         </div>
