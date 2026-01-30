@@ -4,6 +4,98 @@
     <meta charset="UTF-8">
     <title>Pemesanan - Arta Tirta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<<<<<<< HEAD
+=======
+    <style>
+        .pesanan-group {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .pesanan-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .pesanan-info h3 {
+            color: #0077cc;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .pesanan-info p {
+            margin: 8px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .pesanan-status {
+            text-align: right;
+        }
+        
+        .pesanan-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .pesanan-items-table th {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: #ffffff;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .pesanan-items-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+        }
+        
+        .pesanan-items-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .pesanan-items-table .total-row {
+            background: #f0f8ff;
+            font-weight: bold;
+        }
+        
+        .pesanan-items-table .total-row td {
+            padding: 15px 12px;
+            border-top: 2px solid #0077cc;
+            color: #0077cc;
+            font-size: 16px;
+        }
+        
+        .pesanan-actions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: right;
+        }
+        
+        @media (max-width: 768px) {
+            .pesanan-header {
+                grid-template-columns: 1fr;
+            }
+            
+            .pesanan-status {
+                text-align: left;
+            }
+        }
+    </style>
+>>>>>>> 4fd9892 (final code)
 </head>
 <body>
 
@@ -14,9 +106,18 @@
 
 <nav class="navbar">
     <ul>
+        {% if session.get('role') == 'admin' %}
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan" class="active">Pemesanan</a></li>
+        <li><a href="/stok">Kelola Stok</a></li>
+        {% else %}
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/pemesanan" class="active">Pemesanan</a></li>
         <li><a href="/harga">Daftar Harga & Pesan</a></li>
+<<<<<<< HEAD
+=======
+        {% endif %}
+>>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">
@@ -41,6 +142,7 @@
     {% endwith %}
 
     <div class="table-container">
+<<<<<<< HEAD
         {% if pemesanan %}
         <table>
             <thead>
@@ -88,6 +190,78 @@
                 {% endfor %}
             </tbody>
         </table>
+=======
+        {% if pesanan_grouped %}
+            {% for kode, group in pesanan_grouped.items() %}
+            <div class="pesanan-group">
+                <div class="pesanan-header">
+                    <div class="pesanan-info">
+                        <h3>Kode: {{ kode }}</h3>
+                        <p><strong>Tanggal:</strong> {{ group['info'].tanggal_pesan.strftime('%d-%m-%Y %H:%M') }}</p>
+                        <p><strong>Pelanggan:</strong> {{ group['info'].nama_pelanggan }}</p>
+                        <p><strong>Alamat:</strong> {{ group['info'].alamat }}</p>
+                        <p><strong>Metode Pembayaran:</strong> {{ group['info'].metode_pembayaran }}</p>
+                        {% if group['info'].catatan %}
+                        <p><strong>Catatan:</strong> {{ group['info'].catatan }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="pesanan-status">
+                        <span class="status-badge status-{{ group['info'].status|lower|replace(' ', '-') }}">
+                            {{ group['info'].status }}
+                        </span>
+                        {% if session.get('role') == 'admin' %}
+                        <form method="POST" action="{{ url_for('update_status', pesanan_id=group['info'].id) }}" style="margin-top: 10px;">
+                            <select name="status" onchange="this.form.submit()" style="padding: 8px; border-radius: 6px; border: 1px solid #ddd;">
+                                <option value="Menunggu Konfirmasi" {% if group['info'].status == 'Menunggu Konfirmasi' %}selected{% endif %}>Menunggu</option>
+                                <option value="Dikonfirmasi" {% if group['info'].status == 'Dikonfirmasi' %}selected{% endif %}>Dikonfirmasi</option>
+                                <option value="Diproses" {% if group['info'].status == 'Diproses' %}selected{% endif %}>Diproses</option>
+                                <option value="Dikirim" {% if group['info'].status == 'Dikirim' %}selected{% endif %}>Dikirim</option>
+                                <option value="Selesai" {% if group['info'].status == 'Selesai' %}selected{% endif %}>Selesai</option>
+                            </select>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <table class="pesanan-items-table">
+                    <thead>
+                        <tr>
+                            <th>Jenis Galon</th>
+                            <th>Harga Satuan</th>
+                            <th>Jumlah</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in group['items'] %}
+                        <tr>
+                            <td>{{ item.jenis_galon }}</td>
+                            <td>Rp {{ "{:,.0f}".format(item.harga_satuan) }}</td>
+                            <td>{{ item.jumlah }} galon</td>
+                            <td>Rp {{ "{:,.0f}".format(item.total_harga) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="3"><strong>Total Pesanan:</strong></td>
+                            <td><strong>Rp {{ "{:,.0f}".format(group['total']) }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                {% if session.get('role') == 'admin' %}
+                <div class="pesanan-actions">
+                    <form method="POST" action="{{ url_for('delete_pemesanan', pesanan_id=group['info'].id) }}" 
+                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan {{ kode }}? Semua item dalam pesanan ini akan dihapus.');"
+                          class="delete-form">
+                        <button type="submit" class="delete-btn">Hapus Pesanan</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+>>>>>>> 4fd9892 (final code)
         {% else %}
         <p style="text-align: center; color: #666; padding: 20px;">
             Belum ada pesanan. <a href="/harga" class="link">Pesan sekarang!</a>
@@ -96,10 +270,24 @@
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
+<<<<<<< HEAD
         <a href="/harga" class="btn">Buat Pesanan Baru</a>
         {% if session.get('role') == 'admin' %}
         <a href="/stok" class="btn" style="background: #6f42c1;">Kelola Stok</a>
         <a href="/admin/dashboard" class="btn" style="background: #28a745;">Dashboard Admin</a>
+=======
+        {% if session.get('role') == 'admin' %}
+        <div class="report-buttons">
+            <a href="{{ url_for('report_excel') }}" class="btn btn-success">
+                📊 Unduh Excel
+            </a>
+            <a href="{{ url_for('report_pdf') }}" class="btn btn-danger">
+                📄 Unduh PDF
+            </a>
+        </div>
+        {% else %}
+        <a href="/harga" class="btn">Buat Pesanan Baru</a>
+>>>>>>> 4fd9892 (final code)
         {% endif %}
     </div>
 

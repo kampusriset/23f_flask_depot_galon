@@ -15,9 +15,18 @@
 
 <nav class="navbar">
     <ul>
+        {% if session.get('role') == 'admin' %}
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/stok">Kelola Stok</a></li>
+        {% else %}
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
         <li><a href="/harga" class="active">Daftar Harga & Pesan</a></li>
+<<<<<<< HEAD
+=======
+        {% endif %}
+>>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">
@@ -41,6 +50,7 @@
         {% endif %}
     {% endwith %}
 
+<<<<<<< HEAD
     <div class="price-grid">
         {% for h in harga %}
         <div class="price-card">
@@ -113,8 +123,255 @@
         </div>
         {% endfor %}
     </div>
+=======
+    <!-- Form Pemesanan Multiple Kategori -->
+    <form method="POST" action="{{ url_for('pesan_galon') }}" id="multiOrderForm" class="multi-order-form">
+        <div class="order-header-section">
+            <div class="form-group full-width">
+                <label for="nama">Nama Pelanggan:</label>
+                <input type="text" id="nama" name="nama" required 
+                       placeholder="Nama pelanggan" value="{{ session.get('nama_lengkap', '') }}">
+            </div>
+            
+            <div class="form-group full-width">
+                <label for="alamat">Alamat Pengiriman:</label>
+                <textarea id="alamat" name="alamat" rows="3" required 
+                          placeholder="Alamat lengkap pengiriman"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="metode_pembayaran">Metode Pembayaran:</label>
+                <select id="metode_pembayaran" name="metode_pembayaran">
+                    <option value="Cash">Cash (Bayar di Tempat)</option>
+                    <option value="Transfer">Transfer Bank</option>
+                    <option value="QRIS">QRIS</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="catatan">Catatan (opsional):</label>
+                <textarea id="catatan" name="catatan" rows="2" 
+                          placeholder="Catatan khusus"></textarea>
+            </div>
+        </div>
+
+        <h3 style="margin: 30px 0 20px; color: var(--primary-blue);">Pilih Kategori Galon:</h3>
+        
+        <div class="price-grid">
+            {% for h in harga %}
+            <div class="price-card selectable-card">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" 
+                           id="galon_{{ loop.index }}" 
+                           name="selected_galon" 
+                           value="{{ h.id }}"
+                           data-jenis="{{ h.jenis }}"
+                           data-harga="{{ h.harga }}"
+                           data-stok="{{ h.stok }}"
+                           class="galon-checkbox"
+                           {% if h.stok <= 0 %}disabled{% endif %}>
+                    <label for="galon_{{ loop.index }}" class="checkbox-label">
+                        <h3>{{ h.jenis }}</h3>
+                        <p class="price">Rp {{ "{:,.0f}".format(h.harga) }}</p>
+                        
+                        {% if h.stok > 0 %}
+                        <div class="stok-info stok-tinggi">Stok: {{ h.stok }} galon</div>
+                        {% else %}
+                        <div class="stok-info stok-rendah">Stok Habis</div>
+                        {% endif %}
+                    </label>
+                </div>
+                
+                <div class="quantity-input-wrapper" style="display: none;">
+                    <label for="jumlah_{{ loop.index }}">Jumlah:</label>
+                    <input type="number" 
+                           id="jumlah_{{ loop.index }}" 
+                           name="jumlah_{{ h.id }}" 
+                           min="1" 
+                           value="1" 
+                           class="quantity-input"
+                           {% if h.stok > 0 %}max="{{ h.stok }}"{% else %}disabled{% endif %}>
+                    <span class="subtotal" data-harga="{{ h.harga }}">Rp 0</span>
+                </div>
+                
+                {% if session.get('role') == 'admin' %}
+                <div class="admin-section">
+                    <h4>Tambah Stok (Admin)</h4>
+                    <form method="POST" action="{{ url_for('beli_galon') }}" onsubmit="event.stopPropagation();">
+                        <input type="hidden" name="jenis_galon" value="{{ h.jenis }}">
+                        <div class="form-group">
+                            <label for="tambah{{ loop.index }}">Jumlah:</label>
+                            <input type="number" id="tambah{{ loop.index }}" name="jumlah" 
+                                   min="1" max="1000" value="10" required>
+                        </div>
+                        <button type="submit" class="btn-beli">Tambah Stok</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="order-summary">
+            <div class="summary-header">
+                <h3>Ringkasan Pesanan</h3>
+            </div>
+            <div id="orderItems" class="order-items">
+                <p style="text-align: center; color: #666; padding: 20px;">Pilih kategori galon terlebih dahulu</p>
+            </div>
+            <div class="summary-footer">
+                <div class="total-section">
+                    <strong>Total: <span id="totalHarga">Rp 0</span></strong>
+                </div>
+                <button type="submit" class="btn-order-large" id="submitBtn" disabled>
+                    Pesan Sekarang
+                </button>
+            </div>
+        </div>
+    </form>
+>>>>>>> 4fd9892 (final code)
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.galon-checkbox');
+    const orderItems = document.getElementById('orderItems');
+    const totalHarga = document.getElementById('totalHarga');
+    const submitBtn = document.getElementById('submitBtn');
+    const form = document.getElementById('multiOrderForm');
+    
+    function updateOrderSummary() {
+        let total = 0;
+        let items = [];
+        
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                const card = checkbox.closest('.price-card');
+                const jenis = checkbox.dataset.jenis;
+                const harga = parseInt(checkbox.dataset.harga);
+                const stok = parseInt(checkbox.dataset.stok);
+                const galonId = checkbox.value;
+                const jumlahInput = card.querySelector(`input[name="jumlah_${galonId}"]`);
+                const jumlah = parseInt(jumlahInput.value) || 1;
+                
+                if (jumlah > stok) {
+                    jumlahInput.value = stok;
+                    jumlahInput.max = stok;
+                    alert(`Jumlah melebihi stok. Maksimal: ${stok}`);
+                    return;
+                }
+                
+                const subtotal = harga * jumlah;
+                total += subtotal;
+                
+                items.push({
+                    jenis: jenis,
+                    harga: harga,
+                    jumlah: jumlah,
+                    subtotal: subtotal
+                });
+            }
+        });
+        
+        // Update UI
+        if (items.length === 0) {
+            orderItems.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Pilih kategori galon terlebih dahulu</p>';
+            totalHarga.textContent = 'Rp 0';
+            submitBtn.disabled = true;
+        } else {
+            let html = '<div class="order-items-list">';
+            items.forEach(item => {
+                html += `
+                    <div class="order-item">
+                        <span class="item-name">${item.jenis}</span>
+                        <span class="item-details">${item.jumlah} x Rp ${item.harga.toLocaleString('id-ID')}</span>
+                        <span class="item-subtotal">Rp ${item.subtotal.toLocaleString('id-ID')}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            orderItems.innerHTML = html;
+            totalHarga.textContent = 'Rp ' + total.toLocaleString('id-ID');
+            submitBtn.disabled = false;
+        }
+    }
+    
+    // Handle checkbox change
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const card = this.closest('.price-card');
+            const quantityWrapper = card.querySelector('.quantity-input-wrapper');
+            
+            if (this.checked) {
+                quantityWrapper.style.display = 'block';
+                card.classList.add('selected');
+            } else {
+                quantityWrapper.style.display = 'none';
+                card.classList.remove('selected');
+                const jumlahInput = card.querySelector('.quantity-input');
+                jumlahInput.value = 1;
+            }
+            updateOrderSummary();
+        });
+    });
+    
+    // Handle quantity change
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('input', function() {
+            const checkbox = this.closest('.price-card').querySelector('.galon-checkbox');
+            const stok = parseInt(checkbox.dataset.stok);
+            const jumlah = parseInt(this.value) || 1;
+            
+            if (jumlah > stok) {
+                this.value = stok;
+                alert(`Jumlah melebihi stok. Maksimal: ${stok}`);
+            }
+            
+            // Update subtotal display
+            const harga = parseInt(checkbox.dataset.harga);
+            const subtotal = harga * parseInt(this.value);
+            const subtotalSpan = this.parentElement.querySelector('.subtotal');
+            subtotalSpan.textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
+            
+            updateOrderSummary();
+        });
+    });
+    
+    // Form validation before submit
+    form.addEventListener('submit', function(e) {
+        const checkedBoxes = document.querySelectorAll('.galon-checkbox:checked');
+        if (checkedBoxes.length === 0) {
+            e.preventDefault();
+            alert('Silakan pilih minimal 1 kategori galon');
+            return false;
+        }
+        
+        // Validate quantities
+        let isValid = true;
+        checkedBoxes.forEach(checkbox => {
+            const card = checkbox.closest('.price-card');
+            const galonId = checkbox.value;
+            const jumlahInput = card.querySelector(`input[name="jumlah_${galonId}"]`);
+            const jumlah = parseInt(jumlahInput.value) || 0;
+            const stok = parseInt(checkbox.dataset.stok);
+            
+            if (jumlah <= 0) {
+                isValid = false;
+                alert(`Jumlah untuk ${checkbox.dataset.jenis} harus lebih dari 0`);
+            } else if (jumlah > stok) {
+                isValid = false;
+                alert(`Jumlah untuk ${checkbox.dataset.jenis} melebihi stok (${stok})`);
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            return false;
+        }
+    });
+});
+</script>
 
 </body>
 </html>

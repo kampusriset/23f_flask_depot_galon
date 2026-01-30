@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <title>Kelola Stok - Arta Tirta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<<<<<<< HEAD
+=======
+    <style>
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .stok-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stok-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .stok-low .stok-dot {
+            animation: pulse 2s infinite;
+        }
+    </style>
+>>>>>>> 4fd9892 (final code)
 </head>
 <body>
 
@@ -14,10 +41,16 @@
 
 <nav class="navbar">
     <ul>
+<<<<<<< HEAD
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
         <li><a href="/harga">Daftar Harga</a></li>
         <li><a href="/stok" class="active">Stok</a></li>
+=======
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/stok" class="active">Kelola Stok</a></li>
+>>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">
@@ -29,7 +62,56 @@
 </nav>
 
 <div class="container">
+<<<<<<< HEAD
     <h2>Kelola Stok Galon</h2>
+=======
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+        <h2>Kelola Stok Galon</h2>
+        <a href="{{ url_for('tambah_kategori') }}" class="btn btn-success" style="background: linear-gradient(135deg, #10b981, #059669);">
+            ➕ Tambah Kategori Baru
+        </a>
+    </div>
+
+    <!-- Legenda Aturan Warna Stok -->
+    <div style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin-bottom: 15px; color: #1e40af; font-size: 18px; display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 24px;">📊</span> Legenda Status Stok
+        </h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f0fdf4; border-left: 4px solid #28a745; border-radius: 6px;">
+                <div style="width: 20px; height: 20px; background: #28a745; border-radius: 50%; flex-shrink: 0;"></div>
+                <div>
+                    <strong style="color: #166534; font-size: 14px;">Tinggi</strong>
+                    <p style="color: #64748b; font-size: 12px; margin: 0;">≥ 100 galon</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #fffbeb; border-left: 4px solid #ffc107; border-radius: 6px;">
+                <div style="width: 20px; height: 20px; background: #ffc107; border-radius: 50%; flex-shrink: 0;"></div>
+                <div>
+                    <strong style="color: #854d0e; font-size: 14px;">Sedang</strong>
+                    <p style="color: #64748b; font-size: 12px; margin: 0;">50 - 99 galon</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #fff7ed; border-left: 4px solid #ff9800; border-radius: 6px;">
+                <div style="width: 20px; height: 20px; background: #ff9800; border-radius: 50%; flex-shrink: 0;"></div>
+                <div>
+                    <strong style="color: #9a3412; font-size: 14px;">Perhatian</strong>
+                    <p style="color: #64748b; font-size: 12px; margin: 0;">10 - 49 galon</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #fef2f2; border-left: 4px solid #e63946; border-radius: 6px;">
+                <div style="width: 20px; height: 20px; background: #e63946; border-radius: 50%; flex-shrink: 0; animation: pulse 2s infinite;"></div>
+                <div>
+                    <strong style="color: #991b1b; font-size: 14px;">Rendah</strong>
+                    <p style="color: #64748b; font-size: 12px; margin: 0;">&lt; 10 galon</p>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 13px; font-style: italic;">
+            💡 <strong>Catatan:</strong> Stok dengan status "Rendah" perlu segera ditambahkan untuk menghindari kehabisan stok.
+        </p>
+    </div>
+>>>>>>> 4fd9892 (final code)
     
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -47,6 +129,7 @@
                 Rp {{ "{:,.0f}".format(galon.harga) }}
             </p>
             <p>
+<<<<<<< HEAD
                 {% if galon.stok > 50 %}
                 <span style="font-size: 18px; font-weight: bold; color: #28a745;">
                     Stok: {{ galon.stok }} galon (Tinggi)
@@ -57,6 +140,26 @@
                 </span>
                 {% else %}
                 <span style="font-size: 18px; font-weight: bold; color: #e63946;">
+=======
+                {% if galon.stok >= 100 %}
+                <span class="stok-indicator" style="font-size: 18px; font-weight: bold; color: #28a745;">
+                    <span class="stok-dot" style="background: #28a745;"></span>
+                    Stok: {{ galon.stok }} galon (Tinggi)
+                </span>
+                {% elif galon.stok >= 50 %}
+                <span class="stok-indicator" style="font-size: 18px; font-weight: bold; color: #ffc107;">
+                    <span class="stok-dot" style="background: #ffc107;"></span>
+                    Stok: {{ galon.stok }} galon (Sedang)
+                </span>
+                {% elif galon.stok >= 10 %}
+                <span class="stok-indicator" style="font-size: 18px; font-weight: bold; color: #ff9800;">
+                    <span class="stok-dot" style="background: #ff9800;"></span>
+                    Stok: {{ galon.stok }} galon (Perhatian)
+                </span>
+                {% else %}
+                <span class="stok-indicator stok-low" style="font-size: 18px; font-weight: bold; color: #e63946;">
+                    <span class="stok-dot" style="background: #e63946;"></span>
+>>>>>>> 4fd9892 (final code)
                     Stok: {{ galon.stok }} galon (Rendah)
                 </span>
                 {% endif %}
@@ -69,23 +172,58 @@
                 <span style="color: #e63946; font-weight: bold;">● Habis</span>
                 {% endif %}
             </p>
+<<<<<<< HEAD
             <a href="/harga" class="btn">Tambah Stok</a>
+=======
+            <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                <a href="{{ url_for('edit_kategori', galon_id=galon.id) }}" class="btn btn-sm" style="background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; padding: 8px 14px; text-decoration: none;">✏️ Edit</a>
+                <form method="POST" action="{{ url_for('beli_galon') }}" style="display: inline;">
+                    <input type="hidden" name="jenis_galon" value="{{ galon.jenis }}">
+                    <div style="display: inline-flex; gap: 5px; align-items: center;">
+                        <input type="number" name="jumlah" min="1" value="10" style="width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;" title="Jumlah stok yang akan ditambahkan">
+                        <button type="submit" class="btn btn-success btn-sm" title="Tambahkan stok ke kategori ini">➕ Update Stok</button>
+                    </div>
+                </form>
+                <form method="POST" action="{{ url_for('delete_galon', galon_id=galon.id) }}" 
+                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori galon ini? Pastikan tidak ada pesanan yang menggunakan kategori ini.');"
+                      class="delete-form">
+                    <button type="submit" class="delete-btn">🗑️ Hapus</button>
+                </form>
+            </div>
+            {% if galon.deskripsi %}
+            <p style="margin-top: 10px; font-size: 13px; color: #64748b; font-style: italic;">
+                {{ galon.deskripsi }}
+            </p>
+            {% endif %}
+>>>>>>> 4fd9892 (final code)
         </div>
         {% endfor %}
     </div>
 
     <div class="table-container" style="margin-top: 40px;">
+<<<<<<< HEAD
         <h3>Riwayat Pembelian Galon</h3>
+=======
+        <h3>Riwayat Update Stock</h3>
+>>>>>>> 4fd9892 (final code)
         {% if pembelian_list %}
         <table>
             <thead>
                 <tr>
                     <th>Tanggal</th>
+<<<<<<< HEAD
                     <th>Pembeli</th>
                     <th>Jenis Galon</th>
                     <th>Jumlah</th>
                     <th>Harga Satuan</th>
                     <th>Total Harga</th>
+=======
+                    <th>Diupdate Oleh</th>
+                    <th>Jenis Galon</th>
+                    <th>Jumlah Ditambahkan</th>
+                    <th>Harga Satuan</th>
+                    <th>Nilai Total</th>
+>>>>>>> 4fd9892 (final code)
                     <th>Status</th>
                 </tr>
             </thead>
@@ -95,7 +233,11 @@
                     <td>{{ p.tanggal_beli.strftime('%d-%m-%Y %H:%M') }}</td>
                     <td>{{ p.pembeli.username }}</td>
                     <td>{{ p.jenis_galon }}</td>
+<<<<<<< HEAD
                     <td>{{ p.jumlah }} galon</td>
+=======
+                    <td><strong>+{{ p.jumlah }}</strong> galon</td>
+>>>>>>> 4fd9892 (final code)
                     <td>Rp {{ "{:,.0f}".format(p.harga_satuan) }}</td>
                     <td>Rp {{ "{:,.0f}".format(p.total_harga) }}</td>
                     <td>
@@ -109,14 +251,22 @@
         </table>
         {% else %}
         <p style="text-align: center; color: #666; padding: 20px;">
+<<<<<<< HEAD
             Belum ada riwayat pembelian galon.
+=======
+            Belum ada riwayat update stock.
+>>>>>>> 4fd9892 (final code)
         </p>
         {% endif %}
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
+<<<<<<< HEAD
         <a href="/harga" class="btn" style="background: #28a745;">Tambah Stok dari Halaman Harga</a>
         <a href="/admin/dashboard" class="btn">Kembali ke Dashboard Admin</a>
+=======
+        <a href="{{ url_for('tambah_kategori') }}" class="btn btn-success" style="background: linear-gradient(135deg, #10b981, #059669);">➕ Tambah Kategori Baru</a>
+>>>>>>> 4fd9892 (final code)
     </div>
 
 </div>

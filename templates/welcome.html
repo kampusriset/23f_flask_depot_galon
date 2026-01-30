@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang - Arta Tirta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='welcome.css') }}">
+</head>
+<body>
+    <div class="welcome-container">
+        <!-- Background Logo Image dengan Blur -->
+        <div class="logo-background-image">
+            <!-- Background Logo Image dengan Blur Effect -->
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Arta Tirta Logo" class="blurred-logo">
+            
+            <!-- Fallback SVG - akan digunakan jika gambar logo tidak ada (di-comment untuk menggunakan gambar) -->
+            <!-- <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" class="blurred-logo-svg">
+                <!-- Outer Circle -->
+                <circle cx="200" cy="200" r="195" fill="none" stroke="#1e3a8a" stroke-width="8" opacity="0.3"/>
+                <circle cx="200" cy="200" r="185" fill="none" stroke="#d1d5db" stroke-width="2" opacity="0.3"/>
+                <circle cx="200" cy="200" r="175" fill="none" stroke="#1e3a8a" stroke-width="2" opacity="0.3"/>
+                
+                <!-- Background Field -->
+                <circle cx="200" cy="200" r="170" fill="#d1d5db" opacity="0.15"/>
+                
+                <!-- Central Banner -->
+                <rect x="50" y="180" width="300" height="40" rx="5" fill="#1e3a8a" opacity="0.2"/>
+                <text x="200" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e3a8a" opacity="0.25">ARTA TIRTA</text>
+                
+                <!-- Upper Waves -->
+                <path d="M 80 120 Q 120 100, 160 120 T 240 120 T 320 120" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.2"/>
+                <path d="M 100 140 Q 150 110, 200 140 T 300 140" fill="none" stroke="#1e40af" stroke-width="4" opacity="0.2"/>
+                <path d="M 120 160 Q 180 130, 240 160" fill="none" stroke="#1e3a8a" stroke-width="3" opacity="0.2"/>
+                
+                <!-- Lower Waves -->
+                <path d="M 80 280 Q 120 300, 160 280 T 240 280 T 320 280" fill="none" stroke="#3b82f6" stroke-width="3" opacity="0.2"/>
+                <path d="M 100 260 Q 150 290, 200 260 T 300 260" fill="none" stroke="#1e40af" stroke-width="4" opacity="0.2"/>
+                <path d="M 120 240 Q 180 270, 240 240" fill="none" stroke="#1e3a8a" stroke-width="3" opacity="0.2"/>
+            </svg> -->
+        </div>
+
+        <!-- Content -->
+        <div class="welcome-content">
+            <div class="welcome-header">
+                <div class="logo-icon">💧</div>
+                <h1 class="welcome-title">Selamat Datang, {{ username }}!</h1>
+                <p class="welcome-subtitle">ARTA TIRTA - Air Minum Isi Ulang</p>
+            </div>
+
+            <div class="welcome-body">
+                <div class="bio-section">
+                    <h2>Tentang Kami</h2>
+                    <div class="bio-content">
+                        <div class="bio-card">
+                            <div class="bio-icon">🏭</div>
+                            <h3>Depot Air Minum Profesional</h3>
+                            <p>Kami adalah depot air minum isi ulang yang telah berpengalaman melayani kebutuhan air minum berkualitas untuk keluarga Anda. Dengan teknologi Reverse Osmosis (RO) dan sistem filtrasi modern, kami menjamin kualitas air yang sehat dan segar.</p>
+                        </div>
+
+                        <div class="bio-card">
+                            <div class="bio-icon">✨</div>
+                            <h3>Kualitas Terjamin</h3>
+                            <p>Setiap galon air yang kami produksi melalui proses penyaringan yang ketat dan standar kebersihan tinggi. Kami menggunakan teknologi terkini untuk memastikan air yang Anda konsumsi bebas dari kontaminan dan aman untuk seluruh keluarga.</p>
+                        </div>
+
+                        <div class="bio-card">
+                            <div class="bio-icon">🚚</div>
+                            <h3>Layanan Terpercaya</h3>
+                            <p>Dengan sistem pemesanan online yang mudah dan praktis, Anda dapat memesan air galon kapan saja. Tim kami siap mengantarkan pesanan Anda dengan cepat dan tepat waktu ke alamat Anda.</p>
+                        </div>
+
+                        <div class="bio-card">
+                            <div class="bio-icon">💚</div>
+                            <h3>Ramah Lingkungan</h3>
+                            <p>Kami peduli terhadap lingkungan dengan menggunakan galon yang dapat diisi ulang, mengurangi penggunaan plastik sekali pakai. Setiap langkah kecil kita bersama dapat membuat perbedaan besar untuk bumi.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>Mengapa Memilih Arta Tirta?</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">💧</span>
+                            <span class="feature-text">Air Berkualitas Tinggi</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span class="feature-text">Pemesanan Mudah & Cepat</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">Sistem Online Terintegrasi</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎯</span>
+                            <span class="feature-text">Harga Terjangkau</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🛡️</span>
+                            <span class="feature-text">Terpercaya & Terjamin</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">❤️</span>
+                            <span class="feature-text">Pelayanan Ramah</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="welcome-footer">
+                <a href="{{ url_for('dashboard') }}" class="btn-continue">
+                    <span>Mulai Pesan</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

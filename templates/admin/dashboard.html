@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard - Arta Tirta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<<<<<<< HEAD
+=======
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+>>>>>>> 4fd9892 (final code)
 </head>
 <body>
 
@@ -14,10 +18,16 @@
 
 <nav class="navbar">
     <ul>
+<<<<<<< HEAD
         <li><a href="/dashboard">Dashboard User</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
         <li><a href="#">Laporan</a></li>
         <li><a href="#">Pengguna</a></li>
+=======
+        <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/stok">Kelola Stok</a></li>
+>>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">
@@ -67,6 +77,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <div style="text-align: center; margin-top: 40px;">
         <a href="/stok" class="btn" style="background: #28a745;">Kelola Stok Galon</a>
         <a href="/pemesanan" class="btn">Kelola Pesanan</a>
@@ -74,6 +85,125 @@
     </div>
 
 </div>
+=======
+    {% if chart_data %}
+    <div class="chart-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3>Statistik Pesanan</h3>
+            <div class="periode-filter" style="display: flex; gap: 8px;">
+                <a href="?periode=minggu" class="btn btn-sm {{ 'active' if periode == 'minggu' else '' }}" style="padding: 8px 16px; font-size: 14px; {% if periode == 'minggu' %}background: linear-gradient(135deg, #1e40af, #3b82f6);{% endif %}">1 Minggu</a>
+                <a href="?periode=bulan" class="btn btn-sm {{ 'active' if periode == 'bulan' else '' }}" style="padding: 8px 16px; font-size: 14px; {% if periode == 'bulan' %}background: linear-gradient(135deg, #1e40af, #3b82f6);{% endif %}">1 Bulan</a>
+                <a href="?periode=kuartal" class="btn btn-sm {{ 'active' if periode == 'kuartal' else '' }}" style="padding: 8px 16px; font-size: 14px; {% if periode == 'kuartal' %}background: linear-gradient(135deg, #1e40af, #3b82f6);{% endif %}">3 Bulan</a>
+                <a href="?periode=tahun" class="btn btn-sm {{ 'active' if periode == 'tahun' else '' }}" style="padding: 8px 16px; font-size: 14px; {% if periode == 'tahun' %}background: linear-gradient(135deg, #1e40af, #3b82f6);{% endif %}">1 Tahun</a>
+            </div>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="chartPesanan"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h3>Distribusi Status Pesanan</h3>
+        <div class="chart-wrapper">
+            <canvas id="chartStatus"></canvas>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="report-buttons">
+        <a href="{{ url_for('report_excel') }}" class="btn btn-success">
+            📊 Unduh Excel
+        </a>
+        <a href="{{ url_for('report_pdf') }}" class="btn btn-danger">
+            📄 Unduh PDF
+        </a>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/stok" class="btn" style="background: linear-gradient(135deg, #10b981, #059669);">Kelola Stok Galon</a>
+        <a href="/pemesanan" class="btn">Kelola Pesanan</a>
+    </div>
+
+    </div>
+
+<script>
+{% if chart_data %}
+const ctxPesanan = document.getElementById('chartPesanan');
+new Chart(ctxPesanan, {
+    type: 'line',
+    data: {
+        labels: {{ chart_data | map(attribute='date') | list | tojson }},
+        datasets: [{
+            label: 'Jumlah Pesanan',
+            data: {{ chart_data | map(attribute='count') | list | tojson }},
+            borderColor: '#1e40af',
+            backgroundColor: 'rgba(30, 64, 175, 0.1)',
+            tension: 0.4,
+            fill: true,
+            pointRadius: 4,
+            pointBackgroundColor: '#3b82f6'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+{% if status_data and status_labels and status_values %}
+const ctxStatus = document.getElementById('chartStatus');
+new Chart(ctxStatus, {
+    type: 'doughnut',
+    data: {
+        labels: {{ status_labels | tojson }},
+        datasets: [{
+            label: 'Jumlah',
+            data: {{ status_values | tojson }},
+            backgroundColor: [
+                '#fef3c7',
+                '#dbeafe',
+                '#e0e7ff',
+                '#f3e8ff',
+                '#d1fae5'
+            ],
+            borderColor: [
+                '#f59e0b',
+                '#3b82f6',
+                '#6366f1',
+                '#a855f7',
+                '#10b981'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right'
+            }
+        }
+    }
+});
+{% endif %}
+{% endif %}
+</script>
+>>>>>>> 4fd9892 (final code)
 
 </body>
 </html>

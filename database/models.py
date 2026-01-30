@@ -1,13 +1,19 @@
+<<<<<<< HEAD
 # database/models.py
+=======
+>>>>>>> 4fd9892 (final code)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
 db = SQLAlchemy()
 
+<<<<<<< HEAD
 # ============================================
 # TABEL USER (Pengguna)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class User(db.Model):
     __tablename__ = 'user'
     
@@ -18,23 +24,35 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=True)
     telepon = db.Column(db.String(20), nullable=True)
     alamat = db.Column(db.Text, nullable=True)
+<<<<<<< HEAD
     role = db.Column(db.String(20), default='customer')  # 'customer', 'admin'
+=======
+    role = db.Column(db.String(20), default='customer')
+>>>>>>> 4fd9892 (final code)
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
+<<<<<<< HEAD
     # Relasi ke tabel lain
     pemesanan = db.relationship('Pemesanan', backref='user', lazy=True)
     pembelian_galon = db.relationship('PembelianGalon', backref='pembeli', lazy=True)
     
     # Fungsi untuk password
+=======
+    pemesanan = db.relationship('Pemesanan', backref='user', lazy=True)
+    pembelian_galon = db.relationship('PembelianGalon', backref='pembeli', lazy=True)
+>>>>>>> 4fd9892 (final code)
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+<<<<<<< HEAD
     # Cek apakah admin
+=======
+>>>>>>> 4fd9892 (final code)
     def is_admin(self):
         return self.role == 'admin'
     
@@ -42,9 +60,12 @@ class User(db.Model):
         return f'<User {self.username} - {self.role}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL GALON (Produk)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class Galon(db.Model):
     __tablename__ = 'galon'
     
@@ -60,15 +81,22 @@ class Galon(db.Model):
         return f'<Galon {self.jenis} - Rp {self.harga}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL PEMESANAN (Order)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class Pemesanan(db.Model):
     __tablename__ = 'pemesanan'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+<<<<<<< HEAD
     kode_pemesanan = db.Column(db.String(20), unique=True, nullable=False)
+=======
+    kode_pemesanan = db.Column(db.String(30), nullable=False)  # Tidak unique untuk support multiple item per pesanan
+>>>>>>> 4fd9892 (final code)
     nama_pelanggan = db.Column(db.String(100), nullable=False)
     alamat = db.Column(db.Text, nullable=False)
     jenis_galon = db.Column(db.String(50), nullable=False)
@@ -82,16 +110,22 @@ class Pemesanan(db.Model):
     tanggal_konfirmasi = db.Column(db.DateTime, nullable=True)
     tanggal_selesai = db.Column(db.DateTime, nullable=True)
     
+<<<<<<< HEAD
     # Relasi ke pembayaran
+=======
+>>>>>>> 4fd9892 (final code)
     pembayaran = db.relationship('Pembayaran', backref='pemesanan', lazy=True, uselist=False)
     
     def __repr__(self):
         return f'<Pemesanan {self.kode_pemesanan} - {self.status}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL PEMBELIAN GALON (Tambah Stok)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class PembelianGalon(db.Model):
     __tablename__ = 'pembelian_galon'
     
@@ -108,9 +142,12 @@ class PembelianGalon(db.Model):
         return f'<PembelianGalon {self.jenis_galon} x{self.jumlah}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL PEMBAYARAN (Payment)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class Pembayaran(db.Model):
     __tablename__ = 'pembayaran'
     
@@ -127,16 +164,25 @@ class Pembayaran(db.Model):
         return f'<Pembayaran {self.status} - Rp {self.jumlah_bayar}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL LAPORAN (Reports)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class Laporan(db.Model):
     __tablename__ = 'laporan'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+<<<<<<< HEAD
     tipe = db.Column(db.String(50), nullable=False)  # 'penjualan', 'pembelian', 'stok'
     periode = db.Column(db.String(20), nullable=False)  # 'harian', 'bulanan', 'tahunan'
     data = db.Column(db.Text, nullable=False)  # JSON data
+=======
+    tipe = db.Column(db.String(50), nullable=False)
+    periode = db.Column(db.String(20), nullable=False)
+    data = db.Column(db.Text, nullable=False)
+>>>>>>> 4fd9892 (final code)
     total = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -144,9 +190,12 @@ class Laporan(db.Model):
         return f'<Laporan {self.tipe} - {self.periode}>'
 
 
+<<<<<<< HEAD
 # ============================================
 # TABEL PENGATURAN (Settings)
 # ============================================
+=======
+>>>>>>> 4fd9892 (final code)
 class Pengaturan(db.Model):
     __tablename__ = 'pengaturan'
     
@@ -157,6 +206,7 @@ class Pengaturan(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def __repr__(self):
+<<<<<<< HEAD
         return f'<Pengaturan {self.nama_setting}>'
 
 
@@ -178,3 +228,6 @@ class User(db.Model):
 
 Lakukan hal yang sama untuk semua class di atas.
 """
+=======
+        return f'<Pengaturan {self.nama_setting}>'
+>>>>>>> 4fd9892 (final code)

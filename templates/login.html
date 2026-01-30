@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Arta Tirta</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
+<<<<<<< HEAD
 <body>
+=======
+<body class="login-page">
+>>>>>>> 4fd9892 (final code)
 
     <div class="login-container">
         
         <div class="logo-box">
-            <img src="{{ url_for('static', filename='water.png') }}" alt="Logo" class="logo">
+            <div class="logo" style="display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold;">💧</div>
             <h2>Arta Tirta</h2>
             <p>Air Minum Isi Ulang Galon</p>
         </div>
 
+<<<<<<< HEAD
+=======
+        <div class="login-options">
+            <button type="button" class="login-option active" onclick="switchMode('customer')">
+                Pelanggan
+            </button>
+            <button type="button" class="login-option" onclick="switchMode('admin')">
+                Admin
+            </button>
+        </div>
+
+>>>>>>> 4fd9892 (final code)
         <div class="form-box">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -26,16 +42,32 @@
             {% endif %}
             {% endwith %}
 
+<<<<<<< HEAD
             <form method="POST">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Masukkan username" required>
 
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Masukkan password" required>
+=======
+            <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+                <input type="hidden" name="login_type" id="loginType" value="customer">
+                
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Masukkan username" required autofocus>
+                </div>
 
-                <button type="submit" class="btn-login">Login</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Masukkan password" required>
+                </div>
+>>>>>>> 4fd9892 (final code)
+
+                <button type="submit" class="btn-login" id="loginButton">Login sebagai Pelanggan</button>
             </form>
             
+<<<<<<< HEAD
             <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee;">
                 <p style="color: #666; font-size: 14px;">
                     Belum punya akun? 
@@ -48,11 +80,41 @@
                     <strong>Login Demo:</strong><br>
                     Admin: admin / 12345<br>
                     Customer: budi / 12345
+=======
+            <div class="footer-links">
+                <p>
+                    Belum punya akun? 
+                    <a href="{{ url_for('register') }}">Daftar di sini</a>
+>>>>>>> 4fd9892 (final code)
                 </p>
             </div>
         </div>
 
     </div>
+
+<script>
+function switchMode(mode) {
+    const customerBtn = document.querySelector('.login-option:first-child');
+    const adminBtn = document.querySelector('.login-option:last-child');
+    const loginForm = document.getElementById('loginForm');
+    const loginType = document.getElementById('loginType');
+    const loginButton = document.getElementById('loginButton');
+    
+    if (mode === 'admin') {
+        customerBtn.classList.remove('active');
+        adminBtn.classList.add('active');
+        loginForm.action = "{{ url_for('admin_login') }}";
+        loginType.value = 'admin';
+        loginButton.textContent = 'Login sebagai Admin';
+    } else {
+        customerBtn.classList.add('active');
+        adminBtn.classList.remove('active');
+        loginForm.action = "{{ url_for('login') }}";
+        loginType.value = 'customer';
+        loginButton.textContent = 'Login sebagai Pelanggan';
+    }
+}
+</script>
 
 </body>
 </html>

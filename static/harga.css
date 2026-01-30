@@ -158,4 +158,224 @@
 .tab.active {
     color: #0077c8;
     border-bottom: 3px solid #0077c8;
+<<<<<<< HEAD
+=======
+}
+
+/* Multi Order Form Styles */
+.multi-order-form {
+    margin-top: 30px;
+}
+
+.order-header-section {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.order-header-section .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.selectable-card {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.selectable-card:hover {
+    border-color: #0099ff;
+    box-shadow: 0 6px 16px rgba(0,153,255,0.2);
+}
+
+.selectable-card.selected {
+    border-color: #0099ff;
+    background: #f0f8ff;
+    box-shadow: 0 6px 16px rgba(0,153,255,0.3);
+}
+
+.checkbox-wrapper {
+    position: relative;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-label {
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+}
+
+.checkbox-wrapper input[type="checkbox"]:checked + .checkbox-label {
+    color: #0099ff;
+}
+
+.quantity-input-wrapper {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.quantity-input-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+.quantity-input-wrapper input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.quantity-input-wrapper .subtotal {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 16px;
+}
+
+.order-summary {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+.summary-header {
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-header h3 {
+    margin: 0;
+    color: #0077cc;
+    font-size: 22px;
+}
+
+.order-items {
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.order-item .item-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.order-item .item-details {
+    color: #666;
+    font-size: 14px;
+}
+
+.order-item .item-subtotal {
+    font-weight: bold;
+    color: #28a745;
+    text-align: right;
+}
+
+.summary-footer {
+    border-top: 2px solid #e0e0e0;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.total-section {
+    font-size: 24px;
+    color: #333;
+}
+
+.total-section strong {
+    color: #0077cc;
+}
+
+.total-section span {
+    color: #28a745;
+    font-size: 28px;
+}
+
+.btn-order-large {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(40,167,69,0.3);
+}
+
+.btn-order-large:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(40,167,69,0.4);
+}
+
+.btn-order-large:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .order-header-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .order-item .item-subtotal {
+        text-align: left;
+    }
+    
+    .summary-footer {
+        flex-direction: column;
+    }
+    
+    .btn-order-large {
+        width: 100%;
+    }
+>>>>>>> 4fd9892 (final code)
 }

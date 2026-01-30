@@ -14,9 +14,21 @@
 
 <nav class="navbar">
     <ul>
+<<<<<<< HEAD
         <li><a href="/dashboard" class="active">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
         <li><a href="/harga">Daftar Harga & Pesan</a></li>
+=======
+        {% if session.get('role') == 'admin' %}
+        <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/stok">Kelola Stok</a></li>
+        {% else %}
+        <li><a href="/dashboard" class="active">Dashboard</a></li>
+        <li><a href="/pemesanan">Pemesanan</a></li>
+        <li><a href="/harga">Daftar Harga & Pesan</a></li>
+        {% endif %}
+>>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">
@@ -64,6 +76,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     {% if session.get('role') == 'admin' %}
     <div style="text-align: center; margin-top: 30px;">
         <a href="/admin/dashboard" class="btn" style="background: #6f42c1;">
@@ -71,6 +84,8 @@
         </a>
     </div>
     {% endif %}
+=======
+>>>>>>> 4fd9892 (final code)
 
     <div class="table-container" style="margin-top: 40px;">
         <h3>Pesanan Terbaru</h3>
@@ -105,12 +120,25 @@
         </table>
         {% else %}
         <p style="text-align: center; color: #666; padding: 20px;">
+<<<<<<< HEAD
             Belum ada pesanan. <a href="/harga" class="link">Pesan sekarang!</a>
+=======
+            {% if session.get('role') == 'admin' %}
+            Belum ada pesanan.
+            {% else %}
+            Belum ada pesanan. <a href="/harga" class="link">Pesan sekarang!</a>
+            {% endif %}
+>>>>>>> 4fd9892 (final code)
         </p>
         {% endif %}
     </div>
 
+<<<<<<< HEAD
 </div>
+=======
+    </div>
+
+>>>>>>> 4fd9892 (final code)
 
 </body>
 </html>
