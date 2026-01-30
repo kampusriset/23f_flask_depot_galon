@@ -14,21 +14,9 @@
 
 <nav class="navbar">
     <ul>
-<<<<<<< HEAD
         <li><a href="/dashboard" class="active">Dashboard</a></li>
         <li><a href="/pemesanan">Pemesanan</a></li>
         <li><a href="/harga">Daftar Harga & Pesan</a></li>
-=======
-        {% if session.get('role') == 'admin' %}
-        <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-        <li><a href="/pemesanan">Pemesanan</a></li>
-        <li><a href="/stok">Kelola Stok</a></li>
-        {% else %}
-        <li><a href="/dashboard" class="active">Dashboard</a></li>
-        <li><a href="/pemesanan">Pemesanan</a></li>
-        <li><a href="/harga">Daftar Harga & Pesan</a></li>
-        {% endif %}
->>>>>>> 4fd9892 (final code)
     </ul>
     <div class="user-info">
         <span style="color: #0077c8; font-weight: bold;">

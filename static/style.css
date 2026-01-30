@@ -74,13 +74,8 @@ body {
 }
 
 .container {
-<<<<<<< HEAD
     width: 90%;
     max-width: 1200px;
-=======
-    width: 95%;
-    max-width: 1400px;
->>>>>>> 4fd9892 (final code)
     margin: 30px auto;
     padding: 0 20px;
 }
@@ -237,198 +232,12 @@ body {
     margin: 8px 0;
 }
 
-<<<<<<< HEAD
 /* LOGIN PAGE STYLES */
 .login-page body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #009ffd, #2a2a72);
-=======
-.table-container {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-    margin-top: 30px;
-    border: 1px solid var(--gray-200);
-    overflow-x: auto;
-}
-
-.table-container h3 {
-    color: var(--primary-blue);
-    margin-bottom: 20px;
-    font-size: 22px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-table th {
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-    color: var(--white);
-    padding: 14px 16px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-table td {
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--gray-200);
-    color: var(--gray-800);
-}
-
-table tr:hover {
-    background: var(--gray-50);
-}
-
-table tr:last-child td {
-    border-bottom: none;
-}
-
-.status-badge {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    display: inline-block;
-}
-
-.status-menunggu-konfirmasi {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.status-dikonfirmasi {
-    background: #dbeafe;
-    color: #1e40af;
-}
-
-.status-diproses {
-    background: #e0e7ff;
-    color: #4338ca;
-}
-
-.status-dikirim {
-    background: #f3e8ff;
-    color: #7c3aed;
-}
-
-.status-selesai {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.status-batal {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.status-active {
-    background: #d1fae5;
-    color: #065f46;
-}
-
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-    color: var(--white);
-    text-decoration: none;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, var(--danger), #dc2626);
-}
-
-.btn-danger:hover {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-}
-
-.btn-warning {
-    background: linear-gradient(135deg, var(--warning), #f97316);
-    color: var(--white);
-}
-
-.btn-warning:hover {
-    background: linear-gradient(135deg, #f97316, #ea580c);
-}
-
-.btn-success {
-    background: linear-gradient(135deg, var(--success), #059669);
-}
-
-.btn-success:hover {
-    background: linear-gradient(135deg, #059669, #047857);
-}
-
-.btn-info {
-    background: linear-gradient(135deg, var(--info), #0891b2);
-}
-
-.btn-info:hover {
-    background: linear-gradient(135deg, #0891b2, #0e7490);
-}
-
-.btn-sm {
-    padding: 8px 16px;
-    font-size: 13px;
-}
-
-.flash {
-    padding: 16px 20px;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    font-weight: 500;
-    box-shadow: var(--shadow-sm);
-    border-left: 4px solid;
-}
-
-.flash.success {
-    background: #d1fae5;
-    color: #065f46;
-    border-color: var(--success);
-}
-
-.flash.error {
-    background: #fee2e2;
-    color: #991b1b;
-    border-color: var(--danger);
-}
-
-.flash.info {
-    background: #dbeafe;
-    color: #1e40af;
-    border-color: var(--info);
-}
-
-.flash.warning {
-    background: #fef3c7;
-    color: #92400e;
-    border-color: var(--warning);
-}
-
-.login-page body {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
->>>>>>> 4fd9892 (final code)
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -487,27 +296,15 @@ select {
     border: 2px solid var(--gray-200);
     border-radius: 10px;
     outline: none;
-<<<<<<< HEAD
     font-size: 16px;
     margin-bottom: 10px;
     box-sizing: border-box;
-=======
-    font-size: 15px;
-    margin-bottom: 8px;
-    transition: all 0.3s ease;
-    font-family: inherit;
->>>>>>> 4fd9892 (final code)
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-<<<<<<< HEAD
     border-color: #0077c8;
-=======
-    border-color: var(--secondary-blue);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
->>>>>>> 4fd9892 (final code)
 }
 
 .btn-login {
@@ -530,7 +327,6 @@ select:focus {
     box-shadow: var(--shadow-lg);
 }
 
-<<<<<<< HEAD
 /* BUTTON */
 .btn {
     display: inline-block;
@@ -648,112 +444,6 @@ select:focus {
     text-decoration: none;
     border-radius: 5px;
     transition: 0.3s;
-=======
-.link {
-    color: var(--secondary-blue);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.link:hover {
-    color: var(--primary-blue);
-    text-decoration: underline;
-}
-
-.chart-container {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: var(--shadow);
-    margin: 25px 0;
-    border: 1px solid var(--gray-200);
-}
-
-.chart-container h3 {
-    color: var(--primary-blue);
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-.chart-wrapper {
-    position: relative;
-    height: 400px;
-    margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .navbar ul {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .container {
-        width: 100%;
-        padding: 0 15px;
-    }
-}
-
-.delete-form {
-    display: inline;
-}
-
-.delete-btn {
-    background: var(--danger);
-    color: var(--white);
-    border: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.delete-btn:hover {
-    background: #dc2626;
-    transform: scale(1.05);
-}
-
-.report-buttons {
-    display: flex;
-    gap: 15px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-
-.periode-filter {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.periode-filter .btn.active {
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;
-    color: white !important;
-    box-shadow: var(--shadow);
-}
-
-.admin-only {
-    display: none;
-}
-
-body.admin .admin-only {
-    display: block;
-}
-
-body.admin .admin-only-inline {
-    display: inline-block;
->>>>>>> 4fd9892 (final code)
 }
 
 .logout:hover {
