@@ -1,8 +1,8 @@
 Nama Aplikasi
-Sistem Manajemen Tugas Mahasiswa
+Aplikasi Pembelian Isi Ulang Air Galon Depot Arta Tirta
 
 Kegunaan Aplikasi
-Aplikasi Sistem Manajemen Tugas Mahasiswa dirancang untuk membantu mahasiswa dalam mengelola tugas akademik mereka secara lebih efektif dan terorganisir. Selain itu, aplikasi ini dapat menyajikan laporan kemajuan, memungkinkan pengguna untuk memantau tugas yang sudah diselesaikan dan yang masih perlu dikerjakan,aplikasi ini memastikan mahasiswa tidak melewatkan tenggat waktu. Dengan menggunakan aplikasi ini, mahasiswa dapat lebih fokus dalam belajar, mengurangi stres akibat tugas yang menumpuk, serta meningkatkan manajemen waktu secara lebih efisien.
+Aplikasi ArtaTirta memudahkan pelanggan dalam melakukan pembelian isi ulang air galon tanpa harus datang langsung ke depot. Melalui aplikasi ini, pengguna dapat melakukan pemesanan dengan cepat, memilih jumlah galon, serta menentukan jadwal pengantaran sesuai kebutuhan. Selain itu, aplikasi ini menyediakan informasi harga yang transparan, riwayat pemesanan, dan notifikasi status pesanan sehingga pelanggan merasa lebih nyaman dan terlayani dengan baik. Dengan sistem yang praktis dan efisien, ArtaTirta membantu meningkatkan kualitas pelayanan Depot Arta Tirta serta memperkuat hubungan dengan pelanggan.
 
 Flowchart
 Berikut adalah flowchart yang menggambarkan alur kerja aplikasi: Flowchart alur kerja aplikasi : Bahasa Indonesia
