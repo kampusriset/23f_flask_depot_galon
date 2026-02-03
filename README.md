@@ -6,7 +6,7 @@ Aplikasi ArtaTirta memudahkan pelanggan dalam melakukan pembelian isi ulang air 
 
 # Flowchart
 Berikut adalah flowchart yang menggambarkan alur kerja aplikasi:
-Flowchart alur kerja aplikasi : ![Bahasa Indonesia](Flowchart.jpg)
+Flowchart alur kerja aplikasi : ![Bahasa Indonesia](Flowchart.jpg.png)
 
 Perkenalan Tim
 Sayudha hanif Saputra (2313010527) - [Leader]
