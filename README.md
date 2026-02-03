@@ -9,9 +9,10 @@ Berikut adalah flowchart yang menggambarkan alur kerja aplikasi:
 Flowchart alur kerja aplikasi : ![Bahasa Indonesia](Flowchart.jpg.png)
 
 Perkenalan Tim
-Sayudha hanif Saputra (2313010527) - [Leader]
-Raditya Duta Pratama (2313010549) - [Programmer]
-Yarsis Febriansyah Putra (2313010528) - [Presenter]
-Ridho Bagus Saputra (2313010514) - [Presenter]
+- Sayudha hanif Saputra (2313010527) - [Leader]
+- Raditya Duta Pratama (2313010549) - [Programmer]
+- Yarsis Febriansyah Putra (2313010528) - [Presenter]
+- Ridho Bagus Saputra (2313010514) - [Presenter]
+
 Tautan Video Dokumentasi
 Anda dapat menonton video dokumentasi aplikasi melalui tautan berikut: 
